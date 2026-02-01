@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Extractor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📧 Email Extractor</h1>
+            <p>Extract emails from websites or upload CSV files</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('single')">Single URL</button>
+            <button class="tab-btn" onclick="switchTab('bulk')">Upload CSV</button>
+        </div>
+
+        <!-- Single URL Tab -->
+        <div id="single" class="tab-content active">
+            <div class="card">
+                <h2>Extract Email from Single URL</h2>
+                <form id="singleForm" onsubmit="handleSingleURL(event)">
+                    <div class="form-group">
+                        <label for="url">Enter Website URL:</label>
+                        <input 
+                            type="text" 
+                            id="url" 
+                            name="url" 
+                            placeholder="https://example.com or example.com"
+                            required
+                        >
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>🔍 Fetch Email</span>
+                    </button>
+                </form>
+
+                <div id="singleResult" class="result-container" style="display: none;">
+                    <div class="result-card">
+                        <div class="result-item">
+                            <label>URL:</label>
+                            <p id="resultUrl"></p>
+                        </div>
+                        <div class="result-item">
+                            <label>Email:</label>
+                            <p id="resultEmail"></p>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" onclick="downloadSingleCSV()">
+                                ⬇️ Download CSV
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="singleError" class="error-message" style="display: none;"></div>
+                <div id="singleLoading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Fetching email...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk CSV Tab -->
+        <div id="bulk" class="tab-content">
+            <div class="card">
+                <h2>Extract Emails from CSV</h2>
+                <form id="bulkForm" onsubmit="handleBulkCSV(event)">
+                    <div class="form-group">
+                        <label for="csvFile">Upload CSV File:</label>
+                        <input 
+                            type="file" 
+                            id="csvFile" 
+                            name="csvFile" 
+                            accept=".csv"
+                            required
+                        >
+                        <p class="help-text">CSV must have a column named "url", "website", or similar</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span>📤 Process CSV</span>
+                    </button>
+                </form>
+
+                <div id="bulkLoading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p id="loadingText">Processing...</p>
+                </div>
+
+                <div id="bulkError" class="error-message" style="display: none;"></div>
+
+                <div id="bulkResults" class="results-container" style="display: none;">
+                    <div class="results-header">
+                        <h3>Results</h3>
+                        <button class="btn btn-success" onclick="downloadBulkCSV()">
+                            ⬇️ Download Updated CSV
+                        </button>
+                    </div>
+                    <div id="resultsList" class="results-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the Universe - NASA Astronomy Picture of the Day">
+    <title>NASA APOD - Astronomy Picture of the Day</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-rocket"></i>
+                <span>NASA APOD</span>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Explore the Universe</h1>
+            <p class="hero-subtitle">Astronomy Picture of the Day from NASA</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Date Selector -->
+        <div class="date-selector-wrapper">
+            <div class="date-selector">
+                <label for="datePicker" class="date-label">
+                    <i class="fas fa-calendar-alt"></i> Select Date:
+                </label>
+                <input type="date" id="datePicker" class="date-input">
+                <button class="btn-search" id="searchBtn">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner"></div>
+            <p>Loading cosmic wonders...</p>
+        </div>
+
+        <!-- Content Card -->
+        <article class="content-card">
+            <!-- Image/Video Section -->
+            <div class="media-container">
+                {% if data['media_type'] == 'image' %}
+                <img src="{{ data['url'] }}" alt="{{ data['title'] }}" class="media-image" loading="lazy">
+                {% else %}
+                <div class="video-wrapper">
+                    <iframe src="{{ data['url'] }}" frameborder="0" allowfullscreen class="media-video"></iframe>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Content Section -->
+            <div class="content-body">
+                <!-- Header Info -->
+                <div class="content-header">
+                    <h2 class="content-title">{{ data['title'] }}</h2>
+                    <div class="content-meta">
+                        <span class="meta-date">
+                            <i class="fas fa-calendar"></i> {{ data['date'] }}
+                        </span>
+                        <span class="meta-type">
+                            <i class="fas fa-image"></i> 
+                            {% if data['media_type'] == 'image' %}
+                                Image
+                            {% else %}
+                                Video
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div class="content-explanation">
+                    <h3 class="explanation-title">
+                        <i class="fas fa-book"></i> About Today's Image
+                    </h3>
+                    <p class="explanation-text">{{ data['explanation'] }}</p>
+                </div>
+
+                <!-- Copyright Info -->
+                {% if data.get('copyright') %}
+                <div class="copyright-info">
+                    <i class="fas fa-copyright"></i>
+                    <span>{{ data['copyright'] }}</span>
+                </div>
+                {% endif %}
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="shareBtn">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                    <button class="btn btn-secondary" id="downloadBtn">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 NASA APOD Explorer. Data provided by <a href="https://api.nasa.gov" target="_blank">NASA Open API</a></p>
+            <div class="footer-links">
+                <a href="https://apod.nasa.gov" target="_blank">Official APOD</a> •
+                <a href="https://www.nasa.gov" target="_blank">NASA</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

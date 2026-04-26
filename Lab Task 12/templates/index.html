@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Center Information Bot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-text">
+                <h1>🏥 Medical Center </h1>
+                <p>Premium healthcare assistant — ask about doctors, departments, services, and appointments.</p>
+            </div>
+            <div class="theme-toggle">
+                <span>Dark Mode</span>
+                <button id="theme-button" aria-label="Toggle theme">🌙</button>
+            </div>
+        </div>
+        <div class="hero-card">
+            <div>
+                <h2>Fast answers for patients</h2>
+                <p>Get instant information about specialists, timing, facilities, and emergency support from our smart medical bot.</p>
+            </div>
+            <div class="hero-badge">24/7 Support</div>
+        </div>
+        <div class="quick-commands" aria-label="Quick actions">
+            <button class="quick-command">What departments do you have?</button>
+            <button class="quick-command">How to book an appointment?</button>
+            <button class="quick-command">Where is your hospital located?</button>
+            <button class="quick-command">Do you have emergency services?</button>
+        </div>
+        <div class="chat-container">
+            <div id="chat-messages"></div>
+            <div class="input-container">
+                <input type="text" id="user-input" placeholder="Ask about doctors, departments, or services...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

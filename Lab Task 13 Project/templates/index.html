@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Premium OpenCV Background Studio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Live background studio</p>
+        <h1>Real-time background Replacement </h1>
+        <p class="subtitle">Switch backgrounds instantly, preview webcam output in the browser, and enjoy a modern, premium interface.</p>
+      </div>
+      <div class="hero-chip">Webcam • Background AI </div>
+    </header>
+
+    <main class="content-grid">
+      <section class="panel preview-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-overline">Live preview</p>
+            <h2>Video stream</h2>
+          </div>
+          <span class="badge">Auto-updating</span>
+        </div>
+        <div class="preview-card">
+          <img id="videoStream" src="{{ url_for('video_feed') }}" alt="Live stream" />
+        </div>
+      </section>
+
+      <section class="panel control-panel">
+        <div class="panel-header">
+          <div>
+            <p class="panel-overline">Control center</p>
+            <h2>Choose your scene</h2>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="background">Select background</label>
+          <select id="background" name="background">
+            {% for bg in backgrounds %}
+              <option value="{{ loop.index0 }}" {% if loop.index0 == current %}selected{% endif %}>{{ bg.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button class="primary-button" id="applyBtn">Apply background</button>
+
+        <div class="status-card" id="statusCard">
+          <strong>Status</strong>
+          <p>Choose a background and press <span class="inline-label">Apply background</span> to update the live preview. If your environment does not have a green/blue screen, the app will try smart person segmentation instead.</p>
+        </div>
+
+        <div class="info-list">
+          <div>
+            <strong>Hotkeys</strong>
+            <p>Use browser controls to refresh the stream or reopen the page after changes.</p>
+          </div>
+          <div>
+            <strong>Tips</strong>
+            <p>Want more backgrounds? Add 640×480 images to <code>img/</code> and refresh the page.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
